@@ -23,24 +23,20 @@
 
     <script type="text/javascript">
       var data = fetch("./data.json")
-        .then(function (response) {
-          return response.json();
-        });
+        .then(response => response.json())
+        .then(json => draw(json));
 
-      // create an array with nodes
-      var nodes = data.nodes;
+      function draw(json) {
+        var data = {
+          nodes: new vis.DataSet(json.nodes),
+          edges: new vis.DataSet(json.edges)
+        };
 
-      // create an array with edges
-      var edges = data.edges;
-
-      // create a network
-      var container = document.getElementById("mynetwork");
-      var data = {
-        nodes: nodes,
-        edges: edges,
-      };
-      var options = {};
-      var network = new vis.Network(container, data, options);
+        // create a network
+        var container = document.getElementById("mynetwork");
+        var options = {};
+        var network = new vis.Network(container, data, options);
+      }
     </script>
   </body>
 </html>
